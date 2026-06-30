@@ -1,34 +1,46 @@
 import foodModel from '../Models/foodModel.js'
-import fs from 'fs'
+import s3 from "../config/s3.js";
+import {PutObjectCommand,DeleteObjectCommand} from "@aws-sdk/client-s3";
+import {v4 as uuid} from "uuid"
 
-//add food items
-
-const addFood =  async (req,res)=>
+const addFood = async(req,res)=>
 {
-  try{
-     console.log(req.body.category)
-    let image_filename = `${req.file.filename}`;//using this we can store the uploaded file in this variable
- 
-    const food = new foodModel({
-        name:req.body.name,  
-        description:req.body.description,
-        price:req.body.price,
-        category:req.body.category,
-        image:image_filename
-    })//whenever we hit this this api , in body we will send these details and we will access it in the backend through this function
-    //using this api we can add new food items to our database
-   
-        await food.save();// using this method the food item will be saved in the database
-        res.json({success:true,message:"food added"})// it will be visible in the client side 
-       
-    }catch(error)
-    {
-        console.log(error)
-        res.json({success:false,message:"error"})
-    }
 
+try{
+  if (!req.file) {
+  return res.json({
+    success: false,
+    message: "Image is required",
+  });
 }
-// though this api we can see the listed food items in our database
+
+
+const file = req.file;
+const fileName = `${uuid()}-${file.originalname}`;
+const command = new PutObjectCommand({
+  Bucket:process.env.AWS_BUCKET_NAME,
+  Key:fileName,
+  Body:file.buffer,
+  ContentType: file.mimetype,
+});
+await s3.send(command);
+
+const imageUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileName}`;
+const{name,description,price,category} = req.body;
+const food = new foodModel({
+  name,description,category,price,image:imageUrl
+})
+await food.save();
+
+res.json({success:true,message:"food added"})
+console.log("food added")
+}
+catch(error)
+{
+  return res.json({success:false,message:"food is not added"})
+}
+}
+
 const listFood = async(req,res)=>
 {
   try{
@@ -37,25 +49,33 @@ const listFood = async(req,res)=>
   }catch(error)
   {
     console.log(error);
-    res.json({success:false,message:"Error"})
+    res.status(500).json({success:false,message:error.message})
 
   }
-}// we can access all the food items and send them as a response
-
-//remove food item
+}
 
 const removeFood =async(req,res) =>
 {
   try{
-
-    const food = await foodModel.findById(req.body.id);//we are requesting from the json body itself which is present in the client side ....
-    fs.unlink(`Uploads/${food.image}`,()=>{})//we are manually performing the write operation that's why we are using the filesystem here
-    await foodModel.findByIdAndDelete(req.body.id)
-    res.json({success:true,message:"Food Removed"})
+   
+    const food = await foodModel.findById(req.body.id)
+     if(!food)
+    {
+      return res.json({success:false,message:"No food found"})
+    }
+     const imageKey = food.image.split('/').pop();
+     const command = new DeleteObjectCommand({
+      Bucket:process.env.AWS_BUCKET_NAME,
+      Key:imageKey,
+     })
+     await s3.send(command);
+     await foodModel.findByIdAndDelete(req.body.id)
+     return res.json({success:true,message:"food deleted"})
+     
   }catch(error)
   {
     console.log(error)
-   res.json({success:false,message:"Error"})
+   res.json({success:false,message:error.message})
   }
 }
 

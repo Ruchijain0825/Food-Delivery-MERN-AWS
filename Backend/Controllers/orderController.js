@@ -18,6 +18,7 @@ const placeOrder = async (req, res) => {
             items: req.body.items,
             amount: req.body.amount,
             address: req.body.address,
+            
         })
         await newOrder.save();
         await uiModel.findByIdAndUpdate(req.body.userId, { cartData: {} });

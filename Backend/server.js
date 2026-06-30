@@ -6,8 +6,12 @@ import foodRouter from './Routes/FoodRoute.js'
 import userRouter from './Routes/userroutes.js';
 import cartRouter from './Routes/cartRoute.js';
 import orderRouter from './Routes/orderRoutes.js';
+import feedbackRouter from './Routes/feedbackRoute.js'
 
-
+import aiRouter from './Routes/aiRoutes.js'
+import ratingRouter from './Routes/ratingRoute.js'
+import adminFeedbackRouter from './Routes/adminFeedbackRoute.js';
+import adminRatingRouter from './Routes/adminRatingRoute.js'
 
 
 
@@ -21,13 +25,19 @@ app.use(cors())
 
 //api endpoints
 
+aiRouter.get("/chat", (req,res)=>{
+   res.send("AI Route Working");
+});
 
- app.use("/images", express.static("Uploads"));
-//through which we can see the uploaded image on the web browser so basically what we have done here is we have mounted this folder at this end point
-app.use("/api/food",foodRouter)
 app.use("/api/user",userRouter)
 app.use("/api/cart",cartRouter)
 app.use("/api/order",orderRouter)
+app.use("/api/food",foodRouter)
+app.use('/api/ai',aiRouter);
+app.use('/api/customer',feedbackRouter);
+app.use('/api/rating',ratingRouter);
+app.use('/api/feedback',adminFeedbackRouter);
+app.use('/api/rating',adminRatingRouter);
 
 
 app.get("/",(req,res)=>

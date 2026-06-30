@@ -1,10 +1,15 @@
 import express from "express"
-import { loginUser } from "../Controllers/usercontroller.js"
-import { registerUser } from "../Controllers/usercontroller.js"
+import { forgotPassword, loginUser, resetPassword, sendOtp, verifyOtp, verifyOtpNodemailer } from "../Controllers/usercontroller.js"
+
 
 const userRouter = express.Router()
 
-userRouter.post("/register",registerUser)
+
 userRouter.post("/login",loginUser)
+userRouter.post("/send-otp",sendOtp)
+userRouter.post("/verify-otp",verifyOtp)
+userRouter.post("/verify-otp-nodemailer",verifyOtpNodemailer);
+userRouter.post("/forgotPassword",forgotPassword);
+userRouter.post('/resetPassword',resetPassword)
 
 export default userRouter;
