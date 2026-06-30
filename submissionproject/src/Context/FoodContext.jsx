@@ -7,7 +7,7 @@ export const FoodContext = createContext(null);
 
 const StoreContextProvider = (props) => {
 
-    const url = "http://localhost:4000"
+    const url  = "http://43.205.209.47";
     
     const [foodlist, setFoodList] = useState([]);
     const [cartItems, setCartItems] = useState({});

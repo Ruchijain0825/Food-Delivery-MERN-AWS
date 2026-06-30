@@ -9,7 +9,7 @@ import Orders from './pages/Ordrers/Orders'
 import { ToastContainer } from 'react-toastify';
 import'react-toastify/dist/ReactToastify.css'
 const App = () => {
-  const url = "http://localhost:4000"//it will used as a prop
+  const url = "http://43.205.209.47";
   return (
     <div>
       <ToastContainer/>

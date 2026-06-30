@@ -23,7 +23,7 @@ const AIChat = ({ foodlist,name,foodId,rating }) => {
       setLoading(true);
 
       const response = await axios.post(
-        "http://localhost:4000/api/ai/chat",
+        "http://43.205.209.47/api/ai/chat",
         {
           message,
           foodList: foodlist,
