@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import './Home.css';
 import Header from '../../components/Header/Header';
-import ExploreMenu from '../../components/Exploremenu/Exploremenu';
+import ExploreMenu from '../../components/ExploreMenu/ExploreMenu'
 import FoodRender from '../../components/FoodRender/FoodRender';
 import AppDownload from '../../components/AppDownload/AppDownload';
 import AIChat from '../../components/AiChatBot/AiChatBot';
