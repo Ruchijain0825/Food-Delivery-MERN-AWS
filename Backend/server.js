@@ -17,7 +17,7 @@ import adminRatingRouter from './Routes/adminRatingRoute.js'
 
  connectDB();
 const app = express();
-const port =4000;
+
 
 //middlewares
 app.use(express.json())
@@ -44,8 +44,8 @@ app.get("/",(req,res)=>
 {
    res.send("API Working")
 })
-
+const port = process.env.PORT || 4000;
 app.listen(port,()=>
 {
-    console.log(`server started on http://localhost:${port}`)
+    console.log(`server started on ${port}`)
 })
