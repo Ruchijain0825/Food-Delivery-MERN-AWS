@@ -71,10 +71,16 @@ useEffect(()=>
         else{
             let response = await axios.post(url + "/api/order/placecod", orderData, { headers: { token } });
             if (response.data.success) {
-                navigate("/myorders")
-                toast.success(response.data.message)
-                setCartItems({});
-            }
+               toast.success(response.data.message);
+
+    localStorage.removeItem("data");
+
+    setCartItems({});
+
+    setTimeout(() => {
+        navigate("/myorders");
+    }, 100);
+}
             else {
                 toast.error("Something Went Wrong")
             }
@@ -83,16 +89,20 @@ useEffect(()=>
     }
 
 
-    useEffect(() => {
-        if (!token) {
-            toast.error("to place an order sign in first")
-        
-        }
-        else if (getTotalCartAmount() === 0) {
-            navigate('/cart')
-        }
-    }, [token,getTotalCartAmount()])
+  useEffect(() => {
+    if (!token) {
+        toast.error("To place an order sign in first");
+        navigate("/");
+        return;
+    }
 
+    if (
+        getTotalCartAmount() === 0 &&
+        location.pathname === "/order"
+    ) {
+        navigate("/cart");
+    }
+}, [token, location.pathname]);
     return (
         <form onSubmit={placeOrder} className='place-order'>
             <div className="place-order-left">

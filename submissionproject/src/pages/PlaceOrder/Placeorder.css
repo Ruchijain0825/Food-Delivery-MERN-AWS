@@ -1,19 +1,23 @@
 .place-order
-{display:flex;
+{
+    display:flex;
     align-items: start;
     justify-content: space-between;
     gap:50px;
     margin-top:100px;
+    font-family: 'Poppins', sans-serif;
 }
 .place-order-left
 {
     width:100%;
     max-width:max(30%,500px);
+    font-family: 'Poppins', sans-serif;
 }.place-order-left .title
 {
     font-size: 30px;
     font-weight: 600;
     margin-bottom:50px;
+    font-family: 'Poppins', sans-serif;
 
 
 }
@@ -25,12 +29,14 @@
     border:1px solid #c5c5c5;
     border-radius:4px;
     outline:none;
+    font-family: 'Poppins', sans-serif;
 
 }
 .place-order-left .multi-fields
 {
     display:flex;
     gap:10px;
+       
 }
 .place-order-right 
 
@@ -40,4 +46,5 @@
 }
 .place-order .cart-total button{
     margin-top:30px;
+    font-family: 'Poppins', sans-serif;
 }

@@ -1,20 +1,26 @@
-import React from 'react'
-import {useState} from 'react'
-import './Home.css'
-import Header from '../../components/Header/Header'
-import ExploreMenu from '../../components/Exploremenu/Exploremenu'
-import FoodRender from '../../components/FoodRender/FoodRender'
-import AppDownload from '../../components/AppDownload/AppDownload'
+import React, { useState, useContext } from 'react';
+import './Home.css';
+import Header from '../../components/Header/Header';
+import ExploreMenu from '../../components/Exploremenu/Exploremenu';
+import FoodRender from '../../components/FoodRender/FoodRender';
+import AppDownload from '../../components/AppDownload/AppDownload';
+import AIChat from '../../components/AiChatBot/AiChatBot';
+import { FoodContext } from '../../Context/FoodContext';
 const Home = () => {
-    const[category ,setCategory]=useState("All")
-  return (
-    <div>
-      <Header/>
-      <ExploreMenu setCategory ={setCategory} category={category}/>
-      <FoodRender category = {category}/>
-      <AppDownload/>
-    </div>
-  )
-}
+    const [category, setCategory] = useState("All")
 
-export default Home
+    const { foodlist, url } = useContext(FoodContext);
+
+    return (
+      <div>
+        <Header/>
+        <ExploreMenu setCategory={setCategory} category={category}/>
+        <FoodRender category={category}/>
+
+        <AIChat foodlist={foodlist} url={url}/>
+
+        <AppDownload/>
+      </div>
+    )
+}
+export default Home;

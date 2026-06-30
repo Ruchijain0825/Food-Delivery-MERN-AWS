@@ -12,7 +12,7 @@ const Navbar = ({ setShowLogin }) => {
 
   
   
-  const { getTotalCartAmount, token ,setToken ,foodlist,searching,setSearch,search,city_list,showcity,setshowcity} = useContext(FoodContext);
+  const { getTotalCartAmount, token ,setToken ,foodlist,searching,setSearch,search} = useContext(FoodContext);
   const navigate = useNavigate();
 
 
@@ -27,13 +27,16 @@ const Navbar = ({ setShowLogin }) => {
   }
 
   return (
+    <> 
+    <div className='navbar-wrapper'>
+
     <div className='navbar'>
-      <Link to='/'><img className='logo' src={assets.logo} alt="" /></Link>
+      <Link to='/'><img className='logo' src={assets.logo} alt="" width="60px" /></Link>
       <ul className="navbar-menu">
-        <Link to="/" onClick={() => setMenu("home")} className={`${menu === "home" ? "active" : ""}`}>home</Link>
-        <a href='#explore-menu' onClick={() => setMenu("menu")} className={`${menu === "menu" ? "active" : ""}`}>menu</a>
-        <a href='#app-download' onClick={() => setMenu("mob-app")} className={`${menu === "mob-app" ? "active" : ""}`}>mobile app</a>
-        <a href='#footer' onClick={() => setMenu("contact")} className={`${menu === "contact" ? "active" : ""}`}>contact us</a>
+        <Link to="/" onClick={() => setMenu("home")} className={menu === "home" ? "active" : ""}>home</Link>
+        <a href='#explore-menu' onClick={() => setMenu("menu")} className={menu === "menu" ? "active" : ""}>menu</a>
+        <a href='#app-download' onClick={() => setMenu("mob-app")} className={menu === "mob-app" ? "active" : ""}>mobile app</a>
+        <a href='#footer' onClick={() => setMenu("contact")} className={menu === "contact" ? "active" : ""}>contact us</a>
       </ul>
       <div className="navbar-right">
         <input onChange={searching} value = {search.search} name ="search" type ="text"></input>
@@ -41,13 +44,13 @@ const Navbar = ({ setShowLogin }) => {
    
 
         <Link to='/cart' className='navbar-search-icon'>
-          <img src={assets.basket_icon} alt="" />
+          <img src={assets.basket_icon} alt="" width="70px"/>
           
           
          
           <div className={getTotalCartAmount() > 0 ? "dot" : ""}></div>
         </Link>
-        <img onClick = {()=>{setshowcity(true);setSearch(false)}} src = {assets.location} style={{width:'40px'}} alt = ""/>
+       
         {!token ? <button onClick={() => setShowLogin(true)}>sign in</button>
           : <div className='navbar-profile'>
             <img src={assets.profile_icon} alt="" />
@@ -61,6 +64,8 @@ const Navbar = ({ setShowLogin }) => {
 
       </div>
     </div>
+    </div>
+    </>
   )
 }
 

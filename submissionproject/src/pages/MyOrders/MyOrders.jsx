@@ -36,7 +36,7 @@ if(token)
             {
                 return(
                     <div key={index} className='my-orders-order'>
-                        <img src={assets.parcel_icon} alt=" "/>
+                        <img className='color' src={assets.parcel_icon} alt=" "/>
                       <p>{order.items.map((item,index)=>
                       {
                         if(index===order.items.length-1)
@@ -47,9 +47,12 @@ if(token)
                             return item.name+" X " +item.quantity+ " ,"
                         }
                       })}</p>
-                      <p>${order.amount}.00</p>
-                     <p>Items:{order.items.length}</p>
-                     <p><span>&#x25cf;</span><b>{order.status}</b></p>
+                      
+                      <p className='dollor'>💲  price{order.amount}.00</p>
+                     
+                      
+                     <p className='bag'> 🛒Items:{order.items.length}</p>
+                     <p className='category'><span>🍴</span><b>{order.status}</b></p>
                      <button onClick={fetchOrders}>Track Order</button>
                         </div>
                 )

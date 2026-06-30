@@ -1,6 +1,6 @@
-import basket_icon from './basket_icon.png'
-import logo from './logo.png'
-import header_img from './food.jpg'
+import basket_icon from './cart_food.png'
+import logo from './Delivery.png'
+import header_img from './headerimg.jpg'
 import search_icon from './search_icon.png'
 import menu_1 from './menu_1.png'
 import menu_2 from './menu_2.png'
@@ -11,10 +11,10 @@ import menu_6 from './menu_6.png'
 import menu_7 from './menu_7.png'
 import menu_8 from './menu_8.png'
 
-import food_1 from './food_1.png'
-import food_2 from './food_2.png'
-import food_3 from './food_3.png'
-import food_4 from './food_4.png'
+import food_1 from './salad1.jpg'
+import food_2 from './salad2.jpg'
+import food_3 from './salad3.jpg'
+import food_4 from './salad4.jpg'
 import food_5 from './food_5.png'
 import food_6 from './food_6.png'
 import food_7 from './food_7.png'
@@ -60,7 +60,9 @@ import bag_icon from './bag_icon.png'
 import logout_icon from './logout_icon.png'
 import parcel_icon from './parcel_icon.png'
 import location from './location.png'
-
+import green from './green.jpg'
+import checked from './checked.png'
+import un_checked from './un_checked.png'
 export const assets = {
     logo,
     basket_icon,
@@ -81,7 +83,10 @@ export const assets = {
     logout_icon,
     bag_icon,
     parcel_icon,
-    location
+    location,
+    green,
+    checked,
+    un_checked
 }
 export const city_list = [
 

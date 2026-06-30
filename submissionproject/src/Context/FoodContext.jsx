@@ -8,8 +8,8 @@ export const FoodContext = createContext(null);
 const StoreContextProvider = (props) => {
 
     const url = "http://localhost:4000"
-   const[showcity,setshowcity]=useState(false);
-    const [foodlist, setFoodList] = useState([]);// this state is used for fetching the food from the database 
+    
+    const [foodlist, setFoodList] = useState([]);
     const [cartItems, setCartItems] = useState({});
     const[search,setSearch]=useState({search:""});
     const [token, setToken] = useState(()=>
@@ -24,7 +24,7 @@ const StoreContextProvider = (props) => {
     const name = e.target.name;
     const value = e.target.value;
     setSearch(search=>({...search,[name]:value}));
-    setshowcity(false)
+    
     
   }
 
@@ -95,6 +95,8 @@ const StoreContextProvider = (props) => {
         loadData()
     }, [])
    
+
+    
     const contextValue = { 
         url,
         foodlist,
@@ -108,8 +110,7 @@ const StoreContextProvider = (props) => {
         loadCartData,
         setCartItems,
         currency,
-        city_list,
-        showcity,setshowcity,
+       
         deliveryCharge,search,setSearch,searching
     };
 
