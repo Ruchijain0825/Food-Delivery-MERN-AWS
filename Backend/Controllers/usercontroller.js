@@ -54,7 +54,7 @@ catch(error)
 }
 }
 
-export const registerController = async(req,res)=>
+export const registerUser = async(req,res)=>
 {
   try{
     const{name,email,password} = req.body;
@@ -71,7 +71,7 @@ export const registerController = async(req,res)=>
       return res.json("Please fill the proper email format")
     }
     const hashedPassword = await bcrypt.hash(password,10);
-    await uiModel.create({email:email,password:hashedPassword})
+    await uiModel.create({name:name,email:email,password:hashedPassword})
 
     return res.json({success:true,message:"user registered successfully"})
 
