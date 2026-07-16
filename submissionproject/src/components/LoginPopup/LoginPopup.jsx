@@ -10,12 +10,6 @@ const LoginPopup = ({ setShowLogin }) => {
   const navigate = useNavigate();
   const { setToken, url, loadCartData } = useContext(FoodContext);
   const [currState, setCurrState] = useState("Sign Up")
-
-  const [isOtpMode, setIsOtpMode] = useState(false);
-  const [otpSend, setOtpSend] = useState(false);
-  const [phone, setPhone] = useState("");
-  const [otp, setOtp] = useState("");
-
   const[forgotemail,setforgotemail]=useState("")
   const [forgototp, setforgotOtp] = useState("");
   const [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -28,9 +22,6 @@ const LoginPopup = ({ setShowLogin }) => {
    
   });
   const [newPassword, setNewPassword] = useState("");
-
-  
-
   const [logindata, setloginData] = useState({
     email: "",
     password: "",
@@ -39,6 +30,7 @@ const LoginPopup = ({ setShowLogin }) => {
     const { name, value } = e.target;
     setsignData((prev) => ({ ...prev, [name]: value }));
   };
+
   const onChangeLoginHandler = (e) => {
     const { name, value } = e.target;
     setloginData((prev) => ({ ...prev, [name]: value }));
@@ -81,48 +73,8 @@ const LoginPopup = ({ setShowLogin }) => {
     await verifyOtp();
   }
 };
-  // SEND OTP
-  const sendOtp = async () => {
-    try {
-      const response = await axios.post(url + "/api/user/send-otp", {
-        phone,
-        name:signdata.name,
-        email:signdata.email,
-        password:signdata.password
-      });
-      if (response.data.success) {
-        toast.success("OTP Sent");
-        setOtpSend(true);
-      } else {
-        toast.error(response.data.message);
-      }
-    } catch (error) {
-      
-      toast.error("Failed to send OTP");
-    }
-  };
-  // VERIFY OTP
-  const verifyOtp = async () => {
-    try {
-      const response = await axios.post(url + "/api/user/verify-otp", {
-         name: signdata.name,
-      email: signdata.email,
-      password: signdata.password,
-      phone: phone,
-      otp: otp,
-      });
-      if (response.data.success) {
-        toast.success("registered successful");
-        setCurrState("Login")
-        setShowLogin(true);
-      } else {
-        toast.error(response.data.message);
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error("OTP verification failed");
-    }
-  };
+
+
 // Forgot Password - Send OTP
 const handleSendOtp = async () => {
   try {
@@ -195,7 +147,7 @@ const handleResetPassword = async () => {
           />
         </div>
        
-        {!isOtpMode && (
+    
           <div className="login-popup-inputs">
             {currState === "Sign Up" ? (
               <>
@@ -222,28 +174,7 @@ const handleResetPassword = async () => {
                   placeholder="Password"
                   required
                 />
-               
-                 <input
-                  type="tel"
-                  placeholder="Enter phone number"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
-                 <input
-                  type="text"
-                  placeholder="Enter OTP"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
-                />
-               
-                <br/>
-                <button type="button" onClick={sendOtp}>
-                  Send OTP
-                </button>
-                
               
-                <br/>
-               
               
               </>
                  
@@ -319,7 +250,7 @@ const handleResetPassword = async () => {
               </>
             )}
              <button type="submit">
-              {currState === "Login" ?"Login": "Verify Otp"}
+              {currState === "Login" ?"Login": "Signin"}
             </button> 
             {/* SWITCH */}
             {currState === "Login" ? (
@@ -339,7 +270,7 @@ const handleResetPassword = async () => {
             )}
            
           </div>
-        )}
+        
      
         <div className="login-popup-condition">
           <input type="checkbox" required />
