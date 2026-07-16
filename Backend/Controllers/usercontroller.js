@@ -54,7 +54,33 @@ catch(error)
 }
 }
 
+export const registerController = async(req,res)=>
+{
+  try{
+    const{name,email,password} = req.body;
 
+    const existingemail = await uiModel.findOne({email});
+
+    if(existingemail)
+    {
+      return res.json("email is already regsitered")
+    }
+
+    if(!validator.isEmail(email))
+    {
+      return res.json("Please fill the proper email format")
+    }
+    const hashedPassword = await bcrypt.hash(password,10);
+    await uiModel.create({email:email,password:hashedPassword})
+
+    return res.json({success:true,message:"user registered successfully"})
+
+  }
+  catch(error)
+  {
+    return res.json({success:false,message:"error"})
+  }
+}
 
 export const forgotPassword = async (req, res) => {
   try {
