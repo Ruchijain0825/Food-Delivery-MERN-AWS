@@ -1,5 +1,5 @@
 import uiModel from "../Models/uiModel.js";
-import otpModel from "../Models/otpModel.js";
+
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import validator from "validator";
@@ -54,33 +54,51 @@ catch(error)
 }
 }
 
-export const registerUser = async(req,res)=>
-{
-  try{
-    const{name,email,password} = req.body;
+export const registerUser = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
 
-    const existingemail = await uiModel.findOne({email});
+  
 
-    if(existingemail)
-    {
-      return res.json("email is already regsitered")
+    const existingemail = await uiModel.findOne({ email });
+
+    
+
+    if (existingemail) {
+      return res.json({
+        success: false,
+        message: "Email already registered",
+      });
     }
 
-    if(!validator.isEmail(email))
-    {
-      return res.json("Please fill the proper email format")
-    }
-    const hashedPassword = await bcrypt.hash(password,10);
-    await uiModel.create({name:name,email:email,password:hashedPassword})
+   
 
-    return res.json({success:true,message:"user registered successfully"})
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-  }
-  catch(error)
-  {
-    return res.json({success:false,message:"error"})
-  }
+   
+
+    const user = await uiModel.create({
+      name,
+      email,
+      password: hashedPassword,
+    });
+
+   
+
+    return res.json({
+      success: true,
+      message: "User registered successfully",
+    });
+
+  } catch (error) {
+  console.log("REGISTER ERROR:", error);
+
+  return res.status(500).json({
+    success: false,
+    message: error.message
+  });
 }
+};
 
 export const forgotPassword = async (req, res) => {
   try {
