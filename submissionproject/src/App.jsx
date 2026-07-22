@@ -10,10 +10,14 @@ import MyOrders from './pages/MyOrders/MyOrders'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Verify from './pages/Verify/Verify'
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute.jsx'
+
 
 const App = () => {
 
   const [showLogin,setShowLogin] = useState(false);
+  
+ 
 
   return (
     <>
@@ -23,10 +27,10 @@ const App = () => {
         <Navbar setShowLogin={setShowLogin}/>
         <Routes>
           <Route path='/' element={<Home />}/>
-          <Route path='/cart' element={<Cart />}/>
-          <Route path='/order' element={<PlaceOrder />}/>
-          <Route path='/myorders' element={<MyOrders />}/>
-          <Route path='/verify' element={<Verify />}/>
+          <Route path='/cart' element={<ProtectedRoute><Cart/></ProtectedRoute>}/>
+          <Route path='/order' element={<ProtectedRoute><MyOrders/></ProtectedRoute>}/>
+          <Route path='/myorders' element={<ProtectedRoute><PlaceOrder/></ProtectedRoute>}/>
+          <Route path='/verify' element={<ProtectedRoute><Verify/></ProtectedRoute>}/>
         </Routes>
       </div>
       <Footer />

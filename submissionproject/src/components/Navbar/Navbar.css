@@ -133,55 +133,67 @@ font-family: 'Poppins', sans-serif;
     background-color: #FF4C24;
     font-family: 'Poppins', sans-serif;
 }
-@media (max-width:1050px) {
-    .navbar .logo {
-        width: 140px;
-    }
+@media (max-width: 600px) {
+  .navbar {
+    width: 94%;
+    margin: 20px auto;
+    padding: 10px 12px;
 
-    .navbar-menu {
-        gap: 20px;
-        font-size: 17px;
-    }
+    display: flex;
+    align-items: center;
+    gap: 8px;
 
-    .navbar-right {
-        gap: 30px;
-    }
+    box-sizing: border-box;
+  }
 
-    .navbar-right img {
-        width: 22px;
-    }
+  .navbar-menu {
+    display: none !important;
+  }
 
-    .navbar-right button {
-        padding: 8px 25px;
-    }
-}
+  .navbar .logo {
+    width: 80px;
+    height: auto;
+    flex-shrink: 0;
+  }
 
-@media (max-width:900px) {
-    .navbar .logo {
-        width: 120px;
-    }
+  .navbar-right {
+    flex: 1;
+    min-width: 0;
 
-    .navbar-menu {
-        gap: 15px;
-        font-size: 16px;
-    }
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
 
-    .navbar-right {
-        gap: 20px;
-    }
+  /* Tumhari actual search wrapper class yahan honi chahiye */
+  .search-container {
+    flex: 1;
+    min-width: 0;
+  }
 
-    .navbar-right img {
-        width: 20px;
-    }
+  .search-container input {
+    width: 100%;
+    min-width: 0;
+    height: 36px;
+    box-sizing: border-box;
+  }
 
-    .navbar-right button {
-        font-size: 15px;
-        padding: 7px 20px;
-    }
-}
+  .navbar-search-icon {
+    flex-shrink: 0;
+  }
 
-@media (max-width:750px) {
-    .navbar-menu {
-        display: none;
-    }
+  .navbar-search-icon img {
+    width: 20px;
+  }
+
+  .navbar button {
+    display: block !important;
+    position: static !important;
+
+    flex-shrink: 0;
+    padding: 6px 7px;
+
+    font-size: 10px;
+    white-space: nowrap;
+  }
 }

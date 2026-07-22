@@ -47,4 +47,12 @@
 .place-order .cart-total button{
     margin-top:30px;
     font-family: 'Poppins', sans-serif;
+    padding:50px 50px
+}
+.place-order-submit
+{
+   padding:10px 50px;
+   background-color:tomato;
+   border:1px solid gray;
+   border-radius:2px
 }

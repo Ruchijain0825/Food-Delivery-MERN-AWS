@@ -12,15 +12,16 @@ import aiRouter from './Routes/aiRoutes.js'
 import ratingRouter from './Routes/ratingRoute.js'
 import adminFeedbackRouter from './Routes/adminFeedbackRoute.js';
 import adminRatingRouter from './Routes/adminRatingRoute.js'
-
-
+import { connectRedis } from './config/redis.js'
 
  connectDB();
+ await connectRedis();
 const app = express();
 
 
 //middlewares
 app.use(express.json())
+
 app.use(cors())
 
 //api endpoints
@@ -28,7 +29,10 @@ app.use(cors())
 aiRouter.get("/chat", (req,res)=>{
    res.send("AI Route Working");
 });
-
+app.use("/api/user", (req, res, next) => {
+  console.log("🔥 USER API HIT:", req.method, req.originalUrl);
+  next();
+});
 app.use("/api/user",userRouter)
 app.use("/api/cart",cartRouter)
 app.use("/api/order",orderRouter)

@@ -18,7 +18,7 @@ const LoginPopup = ({ setShowLogin }) => {
     name: "",
     email: "",
     password: "",
-    phone: "",
+   
    
   });
   const [newPassword, setNewPassword] = useState("");
@@ -37,20 +37,24 @@ const LoginPopup = ({ setShowLogin }) => {
   };
   
   const onLogin = async (e) => {
-    e.preventDefault();
+  
     try {
-      let new_url = url;
-      let payload;
-      if (currState === "Login") {
-        new_url += "/api/user/login";
-        payload = logindata;
-      } else {
-        new_url += "/api/user/register";
-        payload = signdata;
-      }
-      const response = await axios.post(new_url, payload);
+   
+      let payload=logindata
+      // if (currState === "Login") {
+      //   new_url += "/api/user/login";
+      //   payload = logindata;
+      // } else {
+      //   new_url += "/api/user/register";
+      //   payload = signdata;
+      // }
+       console.log("🔥 ACTUAL LOGIN URL:", `${url}/api/user/login`);
+      const response = await axios.post(`${url}/api/user/login`, payload);
+     
+
+
       if (response.data.success) {
-        
+       
         setToken(response.data.token);
         localStorage.setItem("token", response.data.token);
         loadCartData({ token: response.data.token });
@@ -64,13 +68,40 @@ const LoginPopup = ({ setShowLogin }) => {
       toast.error("Something went wrong");
     }
   };
+
+  const onSignin = async(e)=>
+  {
+     e.preventDefault();
+    try {
+       console.log("Signup API called");
+  console.log(signdata);
+
+      let payload=signdata;
+       const response = await axios.post(`${url}/api/user/register`, payload);
+       console.log(response.data);
+      if (response.data.success) {
+        console.log(response.data);
+    setCurrState("Login")
+      
+        toast.success(response.data.message);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      
+      toast.error("Something went wrong");
+    }
+  };
+
+  
   const handleSubmit = async (e) => {
   e.preventDefault();
 
   if (currState === "Login") {
+    console.log(currState);
     await onLogin(e);
   } else {
-    await verifyOtp();
+    await onSignin(e)
   }
 };
 
