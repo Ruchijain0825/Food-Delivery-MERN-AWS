@@ -41,13 +41,7 @@ const LoginPopup = ({ setShowLogin }) => {
     try {
    
       let payload=logindata
-      // if (currState === "Login") {
-      //   new_url += "/api/user/login";
-      //   payload = logindata;
-      // } else {
-      //   new_url += "/api/user/register";
-      //   payload = signdata;
-      // }
+   
        console.log("🔥 ACTUAL LOGIN URL:", `${url}/api/user/login`);
       const response = await axios.post(`${url}/api/user/login`, payload);
      
@@ -82,6 +76,14 @@ const LoginPopup = ({ setShowLogin }) => {
        console.log(response.data);
       if (response.data.success) {
         console.log(response.data);
+       
+      setToken(token);
+
+    
+      localStorage.setItem("token", token);
+
+      
+      await loadCartData({ token });
     setCurrState("Login")
       
         toast.success(response.data.message);

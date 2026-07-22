@@ -46,7 +46,7 @@ const AdminLogin = ({url,setShowLogin}) => {
 
       if (response.data.success) {
 
-        // Agar backend token bhej raha hai
+        
         if (response.data.token) {
           localStorage.setItem(
             "adminToken",
