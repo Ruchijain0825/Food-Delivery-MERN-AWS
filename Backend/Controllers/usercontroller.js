@@ -18,45 +18,62 @@ const createToken = (id)=>
 {
   return jwt.sign({id},process.env.JWT_SECRET)
 }
-export const adminLoginController = async(req,res)=>
-{
-  try{
-    const {email,password}=req.body;
+export const adminLoginController = async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-    const user = await uiModel.findById({email});
+    // Email se admin/user find karo
+    const user = await uiModel.findOne({ email });
 
-    if(!user)
-    {
-      return res.status(401).json({success:false,message:"Invalid credentials"})
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid credentials",
+      });
     }
-    const isMatch = await bcrypt.compare(password,user.password)
 
-    if(!isMatch)
-    {
-      return res.status(401).json({success:false,message:"Invaid credentials"})
-    }
-    if(user.role!=="admin")
-    {
-      return res.status(403).json({success:false,message:"Admin access denied"})
-    }
-    
-   res.cookie("token",token,
-    {
-      httpOnly:true,
-      secure:process.env.NODE_ENV === "production",
+    // Password verify
+    const isMatch = await bcrypt.compare(
+      password,
+      user.password
+    );
 
-      sameSite:process.env.NODE_ENV==="production"?"none":"lax",
-      maxAge:7*24*60*60*1000
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid credentials",
+      });
     }
-   )
-   return res.json({success:true,message:"Login successful"})
 
-}
-catch(error)
-{
-  return res.json({success:false,message:"Something went wrong"})
-}
-}
+    // Role verify
+    if (user.role !== "admin") {
+      return res.status(403).json({
+        success: false,
+        message: "Admin access denied",
+      });
+    }
+
+    // JWT generate
+    const token = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET
+    );
+
+    return res.status(200).json({
+      success: true,
+      token,
+      message: "Admin login successful",
+    });
+
+  } catch (error) {
+    console.log("ADMIN LOGIN ERROR:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+};
 export const loginUser = async (req, res) => {
  try {
      const{email,password} = req.body;
