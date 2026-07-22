@@ -65,7 +65,9 @@ const LoginPopup = ({ setShowLogin }) => {
       }
     } catch (error) {
       
-      toast.error("Something went wrong");
+      toast.error(
+    error.response?.data?.message || "Something went wrong"
+  );
     }
   };
 
@@ -120,10 +122,13 @@ const handleSendOtp = async () => {
     } else {
       toast.error(response.data.message);
     }
-  } catch (error) {
-    console.log(error);
-    toast.error("Failed to send OTP");
-  }
+  }catch (error) {
+  console.log("OTP ERROR:", error.response?.status, error.response?.data);
+
+  toast.error(
+    error.response?.data?.message || "Failed to send OTP"
+  );
+}
 };
 // Forgot Password - Verify OTP
 const handleVerifyOtp = async () => {

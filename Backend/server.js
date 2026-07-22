@@ -13,12 +13,13 @@ import ratingRouter from './Routes/ratingRoute.js'
 import adminFeedbackRouter from './Routes/adminFeedbackRoute.js';
 import adminRatingRouter from './Routes/adminRatingRoute.js'
 import { connectRedis } from './config/redis.js'
+import helmet from "helmet"
 
  connectDB();
  await connectRedis();
 const app = express();
 
-
+app.use(helmet())
 //middlewares
 app.use(express.json())
 

@@ -4,31 +4,31 @@ import redisClient from "../config/redis.js";
 const loginLimiter = new RateLimiterRedis({
     storeClient:redisClient,
     keyPrefix:"login",
-    points:2,
-    duration:60,
+    points:5,
+    duration:15*60,
      useRedisPackage: true,
 });
 
 const forgotPasswordLimiter = new RateLimiterRedis({
     storeClient:redisClient,
     keyPrefix:"forgot_password",
-    points:3,
-    duration:15*60,
+    points:2,
+    duration:10*60,
      useRedisPackage: true,
 })
 const sendOtpLimiter = new RateLimiterRedis({
     storeClient:redisClient,
     keyPrefix:"send_otp",
-    points:3,
-    duration:10*60,
+    points:2,
+    duration:15*60,
      useRedisPackage: true,
 });
 
 const verifyOtpLimiter = new RateLimiterRedis({
     storeClient:redisClient,
     keyPrefix:"verify_otp",
-    points:5,
-    duration:10*60,
+    points:2,
+    duration:15*60,
      useRedisPackage: true,
 })
 const getKey = (req)=>
