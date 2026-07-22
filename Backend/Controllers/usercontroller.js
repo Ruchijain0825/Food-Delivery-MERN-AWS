@@ -18,7 +18,45 @@ const createToken = (id)=>
 {
   return jwt.sign({id},process.env.JWT_SECRET)
 }
+export const adminLoginController = async(req,res)=>
+{
+  try{
+    const {email,password}=req.body;
 
+    const user = await uiModel.findById({email});
+
+    if(!user)
+    {
+      return res.status(401).json({success:false,message:"Invalid credentials"})
+    }
+    const isMatch = await bcrypt.compare(password,user.password)
+
+    if(!isMatch)
+    {
+      return res.status(401).json({success:false,message:"Invaid credentials"})
+    }
+    if(user.role!="admin")
+    {
+      return res.status(403).json({success:false,message:"Admin access denied"})
+    }
+    
+   res.cookie("token",token,
+    {
+      httpOnly:true,
+      secure:process.env.NODE_ENV === "production",
+
+      sameSite:process.env.NODE_ENV==="production"?"none":"lax",
+      maxAge:7*24*60*60*1000
+    }
+   )
+   return res.json({success:true,message:"Login successful"})
+
+}
+catch(error)
+{
+  return res.json({success:false,message:"Something went wrong"})
+}
+}
 export const loginUser = async (req, res) => {
  try {
      const{email,password} = req.body;
