@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import "./AdminLogin.css";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const AdminLogin = () => {
+
   const navigate = useNavigate();
+
+  const url = "http://43.205.209.47";
+
   const [loginAdminData, setLoginAdminData] = useState({
     email: "",
     password: "",
@@ -18,42 +24,55 @@ const AdminLogin = () => {
     }));
   };
 
-  const onLogin = (e) => {
+  // ADMIN LOGIN
+  const onLogin = async (e) => {
     e.preventDefault();
 
-   const onLogin = async (e) => {
-   
-     try {
-    
-       let payload=loginAdminData
-       // if (currState === "Login") {
-       //   new_url += "/api/user/login";
-       //   payload = logindata;
-       // } else {
-       //   new_url += "/api/user/register";
-       //   payload = signdata;
-       // }
-        console.log("🔥 ACTUAL LOGIN URL:", `${url}/api/user/login`);
-       const response = await axios.post(`${url}/api/user/login`, payload);
-      
- 
- 
-       if (response.data.success) {
-        
-        
-         navigate("/Add")
-         setShowLogin(false);
-         toast.success(response.data.message);
-       } else {
-         toast.error(response.data.message);
-       }
-     } catch (error) {
-       
-       toast.error(
-     error.response?.data?.message || "Something went wrong"
-   );
-     }
-   };
+    try {
+
+      const payload = loginAdminData;
+
+      console.log(
+        "🔥 ACTUAL ADMIN LOGIN URL:",
+        `${url}/api/user/adminlogin`
+      );
+
+      const response = await axios.post(
+        `${url}/api/user/adminlogin`,
+        payload
+      );
+
+      console.log(response.data);
+
+      if (response.data.success) {
+
+        // Agar backend token bhej raha hai
+        if (response.data.token) {
+          localStorage.setItem(
+            "adminToken",
+            response.data.token
+          );
+        }
+
+        toast.success(response.data.message);
+
+        navigate("/Add");
+
+      } else {
+
+        toast.error(response.data.message);
+
+      }
+
+    } catch (error) {
+
+      console.log(error);
+
+      toast.error(
+        error.response?.data?.message ||
+        "Something went wrong"
+      );
+    }
   };
 
   return (
