@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const AdminLogin = ({url,setshowlogin}) => {
+const AdminLogin = ({url,setShowLogin}) => {
 
   const navigate = useNavigate();
 
