@@ -53,7 +53,7 @@ const AdminLogin = ({url,setShowLogin}) => {
             response.data.token
           );
         }
-         setshowlogin(false)
+         setShowLogin(false)
         toast.success(response.data.message);
 
         navigate("/add");
