@@ -14,6 +14,7 @@ import adminFeedbackRouter from './Routes/adminFeedbackRoute.js';
 import adminRatingRouter from './Routes/adminRatingRoute.js'
 import { connectRedis } from './config/redis.js'
 import helmet from "helmet"
+import cookieParser from 'cookie-parser'
 
  connectDB();
  await connectRedis();
@@ -22,8 +23,20 @@ const app = express();
 app.use(helmet())
 //middlewares
 app.use(express.json())
+app.use(cookieParser())
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  process.env.FRONTEND_URL,
+  process.env.ADMIN_URL,
+].filter(Boolean);
 
-app.use(cors())
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization", "token"],
+}));
 
 //api endpoints
 

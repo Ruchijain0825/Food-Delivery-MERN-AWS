@@ -11,10 +11,11 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Verify from './pages/Verify/Verify'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute.jsx'
+import axios from 'axios'
 
 
 const App = () => {
-
+   axios.defaults.withCredentials=true
   const [showLogin,setShowLogin] = useState(false);
   
  

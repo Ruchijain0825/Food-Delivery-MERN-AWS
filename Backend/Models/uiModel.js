@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
     email:{type:String,required:true,unique:true}, 
    
     password:{type:String,required:true},
+    role:{enum:["user","admin"],default:"user"},
     otp:{type:String,default : null},
     otpExpiry:{type:Date,default:null},
      isOtpVerified:{ type: Boolean, default: false },
