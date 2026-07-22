@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "./AdminLogin.css";
+import {useNavigate} from "react-router-dom"
 
 const AdminLogin = () => {
-
+  const navigate = useNavigate();
   const [loginAdminData, setLoginAdminData] = useState({
     email: "",
     password: "",
@@ -20,7 +21,39 @@ const AdminLogin = () => {
   const onLogin = (e) => {
     e.preventDefault();
 
-    console.log(loginAdminData);
+   const onLogin = async (e) => {
+   
+     try {
+    
+       let payload=loginAdminData
+       // if (currState === "Login") {
+       //   new_url += "/api/user/login";
+       //   payload = logindata;
+       // } else {
+       //   new_url += "/api/user/register";
+       //   payload = signdata;
+       // }
+        console.log("🔥 ACTUAL LOGIN URL:", `${url}/api/user/login`);
+       const response = await axios.post(`${url}/api/user/login`, payload);
+      
+ 
+ 
+       if (response.data.success) {
+        
+        
+         navigate("/Add")
+         setShowLogin(false);
+         toast.success(response.data.message);
+       } else {
+         toast.error(response.data.message);
+       }
+     } catch (error) {
+       
+       toast.error(
+     error.response?.data?.message || "Something went wrong"
+   );
+     }
+   };
   };
 
   return (
