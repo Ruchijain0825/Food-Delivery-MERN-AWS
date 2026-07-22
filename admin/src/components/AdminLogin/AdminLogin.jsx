@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const AdminLogin = () => {
+const AdminLogin = ({url,setshowlogin}) => {
 
   const navigate = useNavigate();
 
-  const url = "http://43.205.209.47";
+  
 
   const [loginAdminData, setLoginAdminData] = useState({
     email: "",
@@ -53,10 +53,10 @@ const AdminLogin = () => {
             response.data.token
           );
         }
-
+         setshowlogin(false)
         toast.success(response.data.message);
 
-        navigate("/Add");
+        navigate("/add");
 
       } else {
 
